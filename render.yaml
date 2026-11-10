@@ -1,0 +1,22 @@
+# Render Blueprint — free web service, no disk.
+# Persistence comes from Postgres (DATABASE_URL), because Render's free plan has
+# no persistent disk and a SQLite file would be wiped on every restart.
+services:
+  - type: web
+    name: shanhai-five-heroes
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: TRUST_PROXY
+        value: "1"
+      # paste the Neon/Postgres connection string in the Render dashboard
+      - key: DATABASE_URL
+        sync: false

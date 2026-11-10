@@ -1,0 +1,1 @@
+export function requestURL(req,trustProxy=false){const forwarded=String(req.headers['x-forwarded-proto']||'').split(',')[0].trim();const scheme=trustProxy&&forwarded==='https'?'https':'http';return new URL(req.url,`${scheme}://${req.headers.host||'127.0.0.1:4174'}`);}
